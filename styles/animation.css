@@ -1,0 +1,12 @@
+/** @format */
+
+.animation-false {
+	opacity: 0;
+	transform: translateX(10px);
+	transition: all 3s linear;
+}
+
+.animation-true {
+	opacity: 1;
+	transform: translateX(0px);
+}
