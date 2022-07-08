@@ -5,3 +5,7 @@
 -- error with linkin between pages landscapes<-->architectural but linkin between all categories and those two seems fine
 
 -- working to post comments with GRAPHQL
+
+## Link to the app
+
+https://cool-places-blog-next-js.vercel.app/
