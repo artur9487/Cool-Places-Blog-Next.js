@@ -37,6 +37,7 @@ const Home = ({ placesOutput, categoriesOutput, mostCommentedOutput }) => {
 };
 
 export const getServerSideProps = async () => {
+	const url = process.env.API;
 	const query = gql`
 		query PlaceQuery {
 			placesSConnection(first: 2, orderBy: createdAt_ASC) {
@@ -141,7 +142,6 @@ export const getServerSideProps = async () => {
 
 	return {
 		props: {
-			mainPlacesOutput,
 			placesOutput,
 			categoriesOutput,
 			mostCommentedOutput

@@ -1,9 +1,9 @@
 /** @format */
 
-import MainContent from '../components/MainContent';
+import MainContent from './components/MainContent';
 import { request, gql } from 'graphql-request';
 import React from 'react';
-import MainLayout from '../components/MainLayout';
+import MainLayout from './components/MainLayout';
 import { GetServerSideProps } from 'next/types';
 import {
 	home_schema,
@@ -14,7 +14,7 @@ import {
 	mostCommenteArr_schema,
 	mostCommentedVaules_schema,
 	mostCommentedResponse_schema
-} from '../components/globalComponents/globalTypes';
+} from './components/globalComponents/globalTypes';
 
 const Home: React.FC<home_schema> = ({
 	placesOutput,
