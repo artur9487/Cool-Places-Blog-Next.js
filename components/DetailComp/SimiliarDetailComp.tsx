@@ -14,7 +14,20 @@ import Image from 'next/image';
 import styles from '/styles/Home.module.scss';
 import Link from 'next/link';
 
-const SimiliarDetailComp = ({ categoriesOutput }) => {
+interface categoriesOutputSchema {
+	categoriesOutput: {
+		node: {
+			placeName: string;
+			photo: { url: string };
+			createdAt: Date;
+			id: string;
+		};
+	}[];
+}
+
+const SimiliarDetailComp: React.FC<categoriesOutputSchema> = ({
+	categoriesOutput
+}) => {
 	return (
 		<Grid
 			className={styles.fade1}
@@ -62,7 +75,7 @@ const SimiliarDetailComp = ({ categoriesOutput }) => {
 											textAlign='center'
 											variant='body1'
 											color='text.secondary'>
-											{moment({ createdAt }).format('MMMM Do YYYY')}
+											{moment(createdAt).format('MMMM Do YYYY')}
 										</Typography>
 										<Typography
 											sx={{

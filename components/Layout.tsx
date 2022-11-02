@@ -2,7 +2,11 @@
 
 import { Container } from '@mui/material';
 
-const Layout = ({ children }) => {
+interface layoutSchema {
+	children: JSX.Element;
+}
+
+const Layout: React.FC<layoutSchema> = ({ children }) => {
 	return <Container sx={{ mt: 4 }}>{children}</Container>;
 };
 

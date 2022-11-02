@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { Stack } from '@mui/material';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
 	return (
 		<>
 			<Box>

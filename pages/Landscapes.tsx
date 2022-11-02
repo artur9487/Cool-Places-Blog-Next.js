@@ -7,13 +7,11 @@ import { GetServerSideProps } from 'next/types';
 import { home_schema } from '../components/globalComponents/globalTypes';
 import { categoryFetchFunction } from '../components/globalComponents/globalFunctions';
 
-const Landscapes /*: React.FC<home_schema>*/ = ({
+const Landscapes: React.FC<home_schema> = ({
 	placesOutput,
 	categoriesOutput,
-	mostCommentedOutput,
-	placesResponse
+	mostCommentedOutput
 }) => {
-	console.log(placesResponse);
 	return (
 		<MainLayout
 			placesOutput={placesOutput}

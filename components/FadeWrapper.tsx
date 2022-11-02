@@ -5,8 +5,12 @@ import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const FadeWrapper = ({ children }) => {
-	const [checked, setChecked] = useState(false);
+interface fadeWrapperSchema {
+	children: JSX.Element;
+}
+
+const FadeWrapper: React.FC<fadeWrapperSchema> = ({ children }) => {
+	const [checked, setChecked] = useState<boolean>(false);
 
 	useEffect(() => {
 		setChecked(true);

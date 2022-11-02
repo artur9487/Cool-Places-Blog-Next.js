@@ -15,6 +15,12 @@
 		"isolatedModules": true,
 		"jsx": "preserve"
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index"],
+	"include": [, "ContextComp.js"
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"pages/index",
+		"components/ViewMoreButton.js"
+	],
 	"exclude": ["node_modules"]
 }

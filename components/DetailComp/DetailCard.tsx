@@ -1,7 +1,12 @@
 /** @format */
 import { Card, Typography, Divider, Box } from '@mui/material';
 
-const DetailCard = ({ children, title }) => {
+interface detailCardSchema {
+	children: JSX.Element;
+	title: String;
+}
+
+const DetailCard: React.FC<detailCardSchema> = ({ children, title }) => {
 	return (
 		<Card
 			sx={{

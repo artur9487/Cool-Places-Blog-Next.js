@@ -15,7 +15,17 @@ import Chip from '@mui/material/Chip';
 import { useContext } from 'react';
 import { Context } from '../../ContextComp';
 
-const MainDetailComp = ({
+interface mainDetailCompSchema {
+	photo: {
+		url: string;
+	};
+	createdAt: Date;
+	description: string;
+	placeName: string;
+	chips: string;
+}
+
+const MainDetailComp: React.FC<mainDetailCompSchema> = ({
 	photo,
 	createdAt,
 	description,
@@ -58,7 +68,7 @@ const MainDetailComp = ({
 					sx={{ fontFamily: 'Playfair Display' }}
 					variant='body1'
 					color='text.secondary'>
-					{moment({ createdAt }).format('MMMM Do YYYY, h:mm:ss a')}
+					{moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')}
 				</Typography>
 				<Typography
 					sx={{

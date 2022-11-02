@@ -9,7 +9,6 @@ const CategoryComponent = ({
 	categoriesOutput,
 	mostCommentedOutput
 }) => {
-	console.log(categoriesOutput);
 	return (
 		<MainLayout
 			placesOutput={placesOutput}

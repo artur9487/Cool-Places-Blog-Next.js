@@ -4,14 +4,18 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import VisibilitySensor from 'react-visibility-sensor';
 
-const AnimationComp = ({ children }) => {
-	const [isVisible, setVisible] = useState(false);
+interface animationComponent {
+	children: JSX.Element;
+}
 
-	let styl;
+const AnimationComp: React.FC<animationComponent> = ({ children }) => {
+	const [isVisible, setVisible] = useState<boolean>(false);
+
+	let style: string;
 	if (isVisible === true) {
-		styl = `animation-true`;
+		style = `animation-true`;
 	} else {
-		styl = `animation-false`;
+		style = `animation-false`;
 	}
 
 	return (
@@ -21,7 +25,7 @@ const AnimationComp = ({ children }) => {
 			onChange={(isVisible2) => {
 				setVisible(isVisible2);
 			}}>
-			<Box className={styl}>{children}</Box>
+			<Box className={style}>{children}</Box>
 		</VisibilitySensor>
 	);
 };

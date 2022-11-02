@@ -1,9 +1,13 @@
 /** @format */
 
 import { Context } from '../../ContextComp';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
-const GoogleDetailComp = ({ coords }) => {
+interface googleDetailCompSchema {
+	coords: string;
+}
+
+const GoogleDetailComp: React.FC<googleDetailCompSchema> = ({ coords }) => {
 	const { maxWidth600 } = useContext(Context);
 	return (
 		<>

@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { Context } from '../ContextComp';
 import CardElement from './CardElement';
 
-const CardContent = () => {
+const CardContent: React.FC = () => {
 	const { data } = useContext(Context);
 
 	return (

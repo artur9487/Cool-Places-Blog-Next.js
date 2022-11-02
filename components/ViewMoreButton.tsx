@@ -3,14 +3,22 @@
 import { Context } from '../ContextComp';
 import { useContext } from 'react';
 import { Box, Typography } from '@mui/material';
-
 import styles from '/styles/Home.module.scss';
 
-const ViewMoreButton = ({ maxWidth900 }) => {
-	const { setLoadMore, data } = useContext(Context);
+interface viewMoreButtonSchema {
+	maxWidth900: string;
+}
 
-	const handler = async () => {
-		await setLoadMore(data.length + 2);
+/*interface contextSchema {
+	setNumberToLoad: React.Dispatch<number>;
+	data: any;
+}*/
+
+const ViewMoreButton: React.FC<viewMoreButtonSchema> = ({ maxWidth900 }) => {
+	const { setNumberToLoad, data } = useContext(Context);
+
+	const handler = () => {
+		setNumberToLoad(data.length + 2);
 	};
 	return (
 		<Box

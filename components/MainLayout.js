@@ -11,7 +11,7 @@ import { useMediaQuery } from '@mui/material';
 
 const MainLayout = (props) => {
 	const { placesOutput, categoriesOutput, type, mostCommentedOutput } = props;
-	const [loadMore, setLoadMore] = useState(placesOutput.length);
+	const [numberToLoad, setNumberToLoad] = useState(placesOutput.length);
 	const [data, setData] = useState(placesOutput);
 	const firstUpdate = useRef(true);
 	const maxWidth900 = useMediaQuery('(max-width:900px)');
@@ -24,8 +24,8 @@ const MainLayout = (props) => {
 					'https://api-eu-central-1.hygraph.com/v2/cl10szcbx0rd401z04l0ldt9g/master';
 				const start = async () => {
 					const query = gql`
-						query PlaceQuery($loadMore: Int!) {
-							placesSConnection(first: $loadMore, orderBy: createdAt_ASC) {
+						query PlaceQuery($numberToLoad: Int!) {
+							placesSConnection(first: $numberToLoad, orderBy: createdAt_ASC) {
 								edges {
 									node {
 										description
@@ -42,7 +42,7 @@ const MainLayout = (props) => {
 						}
 					`;
 
-					const variables = { loadMore };
+					const variables = { numberToLoad };
 
 					const response = await request(url, query, variables);
 					const endResult = response.placesSConnection.edges;
@@ -51,7 +51,7 @@ const MainLayout = (props) => {
 				start();
 			}
 		}
-	}, [loadMore, type]);
+	}, [numberToLoad, type]);
 
 	return (
 		<Context.Provider
@@ -59,7 +59,7 @@ const MainLayout = (props) => {
 				data,
 				categoriesOutput,
 				mostCommentedOutput,
-				setLoadMore,
+				setNumberToLoad,
 				type,
 				maxWidth900,
 				maxWidth600

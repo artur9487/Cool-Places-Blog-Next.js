@@ -11,7 +11,7 @@ import ViewMoreButton from './ViewMoreButton';
 import { Context } from '../ContextComp';
 import styles from '/styles/Home.module.scss';
 
-const MainContent = () => {
+const MainContent: React.FC = () => {
 	const { type, maxWidth900, maxWidth600 } = useContext(Context);
 
 	return (
