@@ -15,7 +15,8 @@
 		"isolatedModules": true,
 		"jsx": "preserve"
 	},
-	"include": [, "ContextComp.js"
+	"include": [
+		"ContextComp.js",
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
