@@ -2,7 +2,6 @@
 
 import MainContent from '../components/MainContent';
 import MainLayout from '../components/MainLayout';
-import { gql, request } from 'graphql-request';
 import { GetServerSideProps } from 'next/types';
 import { home_schema } from '../components/globalComponents/globalTypes';
 import { categoryFetchFunction } from '../components/globalComponents/globalFunctions';
@@ -10,7 +9,7 @@ import { categoryFetchFunction } from '../components/globalComponents/globalFunc
 const Landscapes: React.FC<home_schema> = ({
 	placesOutput,
 	categoriesOutput,
-	mostCommentedOutput
+	mostCommentedOutput,
 }) => {
 	return (
 		<MainLayout
@@ -30,7 +29,7 @@ export const getStaticProps: GetServerSideProps = async () => {
 	const output = await categoryFetchFunction(slug, url);
 
 	return {
-		props: output
+		props: output,
 	};
 };
 

@@ -12,7 +12,7 @@ export interface home_schema {
 			};
 			placeName: string;
 		}[];
-	};
+	}[];
 	categoriesOutput: [];
 	mostCommentedOutput: {
 		node: {
@@ -25,6 +25,18 @@ export interface home_schema {
 		}[];
 		count: number;
 	};
+}
+
+export interface mostCommentedOutput_schema {
+	node: {
+		createdAt: string;
+		id: string;
+		photo: {
+			url: string;
+		};
+		placeName: string;
+	}[];
+	count: number;
 }
 
 export interface placeResponse_schema {
@@ -106,4 +118,25 @@ export interface mostCommentedResponse_schema {
 			};
 		}[];
 	};
+}
+
+export interface context_schema {
+	data: {
+		node: {
+			category: string;
+			createdAt: string;
+			description: string;
+			id: string;
+			photo: {
+				url: string;
+			};
+			placeName: string;
+		}[];
+	}[];
+	mostCommentedOutput: mostCommentedOutput_schema;
+	categoriesOutput: [];
+	setNumberToLoad: React.Dispatch<React.SetStateAction<number>>;
+	type: string;
+	maxWidth900: boolean;
+	maxWidth600: boolean;
 }

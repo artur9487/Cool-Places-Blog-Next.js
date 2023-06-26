@@ -15,6 +15,7 @@ const FadeWrapper: React.FC<fadeWrapperSchema> = ({ children }) => {
 	useEffect(() => {
 		setChecked(true);
 	}, []);
+
 	return (
 		<Fade in={checked} timeout={4000}>
 			<Box>{children}</Box>

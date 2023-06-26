@@ -4,41 +4,36 @@ import MainContent from '../components/MainContent';
 import { request, gql } from 'graphql-request';
 import React from 'react';
 import MainLayout from '../components/MainLayout';
+import { GetServerSideProps } from 'next/types';
 import {
 	home_schema,
 	placeResponse_schema,
-	placesOutput_schema,
 	categoryResponse_schema,
 	categoryNodes_schema,
 	mostCommenteArr_schema,
 	mostCommentedVaules_schema,
 	mostCommentedResponse_schema
 } from '../components/globalComponents/globalTypes';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
-const theme = createTheme({
-	typography: {
-		fontFamily: ['Alumni Sans', 'sans-serif'].join(',')
-	}
-});
-
-const Home = ({ placesOutput, categoriesOutput, mostCommentedOutput }) => {
+const Home: React.FC<home_schema> = ({
+	placesOutput,
+	categoriesOutput,
+	mostCommentedOutput
+}) => {
 	return (
-		<ThemeProvider theme={theme}>
-			<MainLayout
-				placesOutput={placesOutput}
-				categoriesOutput={categoriesOutput}
-				mostCommentedOutput={mostCommentedOutput}
-				type='all'>
-				<MainContent />
-			</MainLayout>
-		</ThemeProvider>
+		<MainLayout
+			placesOutput={placesOutput}
+			categoriesOutput={categoriesOutput}
+			mostCommentedOutput={mostCommentedOutput}
+			type='all'>
+			<MainContent />
+		</MainLayout>
 	);
 };
 
-export const getServerSideProps = async () => {
-	const url = process.env.API;
-	const query = gql`
+export const getServerSideProps: GetServerSideProps = async () => {
+	const url: string = process.env.API;
+	const query: string = gql`
 		query PlaceQuery {
 			placesSConnection(first: 2, orderBy: createdAt_ASC) {
 				edges {
@@ -57,7 +52,7 @@ export const getServerSideProps = async () => {
 		}
 	`;
 
-	const placesResponse = await request(url, query);
+	const placesResponse: placeResponse_schema = await request(url, query);
 
 	const placesOutput = placesResponse.placesSConnection.edges;
 
@@ -77,23 +72,26 @@ export const getServerSideProps = async () => {
 		}
 	`;
 
-	const categoryResponse = await request(url, query2);
+	const categoryResponse: categoryResponse_schema = await request(url, query2);
 
-	const categoryNodes = categoryResponse.placesSConnection.edges;
-	const categoriesArr = categoryNodes.map((item) => {
+	const categoryNodes: categoryNodes_schema[] =
+		categoryResponse.placesSConnection.edges;
+
+	const categoriesArr: string[] = categoryNodes.map((item) => {
 		return item.node.category;
 	});
-	let categoriesOutput = [...new Set(categoriesArr)];
 
-	let mostCommentedArr = categoryNodes.map((item) => {
+	let categoriesOutput: string[] = [...new Set(categoriesArr)];
+
+	let mostCommentedArr: mostCommenteArr_schema[] = categoryNodes.map((item) => {
 		return { place: item.node.id, count: item.node.commentS.length };
 	});
 
-	let mostCommentedOutput = [];
+	let mostCommentedOutput: any = [];
 
-	const fetchMostCommented = async () => {
-		let commentCount = 0;
-		let commentedPlace = '';
+	const fetchMostCommented: () => Promise<void> = async () => {
+		let commentCount: number = 0;
+		let commentedPlace: string = '';
 
 		mostCommentedArr.map((item) => {
 			if (commentCount < item.count) {
@@ -102,12 +100,12 @@ export const getServerSideProps = async () => {
 			}
 		});
 
-		const commentedPlaceIndx = mostCommentedArr.findIndex(
+		const commentedPlaceIndx: number = mostCommentedArr.findIndex(
 			(item) => item.place === commentedPlace
 		);
 		mostCommentedArr.splice(commentedPlaceIndx, 1);
 
-		const query3 = gql`
+		const query3: string = gql`
 			query PlaceQuery($commentedPlace: ID!) {
 				placesSConnection(where: { id: $commentedPlace }) {
 					edges {
@@ -123,11 +121,17 @@ export const getServerSideProps = async () => {
 				}
 			}
 		`;
-		const variables = { commentedPlace };
+		const variables: { commentedPlace: string } = { commentedPlace };
 
-		const mostCommentedResponse = await request(url, query3, variables);
+		const mostCommentedResponse: mostCommentedResponse_schema = await request(
+			url,
+			query3,
+			variables
+		);
 
-		const mostCommentedVaules = mostCommentedResponse.placesSConnection.edges;
+		const mostCommentedVaules: mostCommentedVaules_schema[] =
+			mostCommentedResponse.placesSConnection.edges;
+
 		mostCommentedOutput.push({
 			...mostCommentedVaules,
 			count: commentCount

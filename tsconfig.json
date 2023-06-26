@@ -16,12 +16,15 @@
 		"jsx": "preserve"
 	},
 	"include": [
-		"ContextComp.js",
+		"ContextComp.tsx",
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		"pages/index",
-		"components/ViewMoreButton.js"
+		"components/ViewMoreButton.js",
+		"components/MainLayout.js",
+		"components/MainLayout.js",
+		"components/MainLayout.js"
 	],
 	"exclude": ["node_modules"]
 }
