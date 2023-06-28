@@ -10,9 +10,22 @@ import moment from 'moment';
 import styles from '/styles/Home.module.scss';
 import Link from 'next/link';
 
-const SingleComPost = (item) => {
+interface SingleComPost_schema {
+	node: {
+		placeName: string;
+		createdAt: Date;
+		photo: {
+			url: string;
+		};
+		id: string;
+	};
+	count: number;
+}
+
+const SingleComPost: React.FC<SingleComPost_schema> = (item) => {
 	const { placeName, createdAt, photo, id } = item[0].node;
 	const { count } = item;
+
 	return (
 		<Link href={`/details/${id}`}>
 			<a>
@@ -27,12 +40,12 @@ const SingleComPost = (item) => {
 						alignItems: 'center',
 						flexDirection: 'row',
 						p: 0,
-						mb: 2
+						mb: 2,
 					}}>
 					<CardMedia
 						sx={{
 							width: '30%',
-							height: '100%'
+							height: '100%',
 						}}>
 						<Stack
 							sx={{ width: '100%', height: '100%' }}
@@ -45,7 +58,7 @@ const SingleComPost = (item) => {
 									height: 50,
 									position: 'relative',
 									borderRadius: '100%',
-									overflow: 'hidden'
+									overflow: 'hidden',
 								}}>
 								<Image
 									src={photo.url}
@@ -61,22 +74,22 @@ const SingleComPost = (item) => {
 							width: '70%',
 							display: 'flex',
 							alignItems: 'flex-start',
-							flexDirection: 'column'
+							flexDirection: 'column',
 						}}>
 						<Typography
 							sx={{
-								fontFamily: 'Playfair Display'
+								fontFamily: 'Playfair Display',
 							}}
 							variant='body2'
 							color='text.secondary'>
-							{moment({ createdAt }).format('MMM Do YY')}
+							{moment(createdAt).format('MMM Do YY')}
 						</Typography>
 						<Typography
 							sx={{
 								fontFamily: 'Playfair Display',
 								fontStyle: 'italic',
 								fontSize: 17,
-								fontWeight: 1000
+								fontWeight: 1000,
 							}}
 							fontSize={15}
 							component='div'>
@@ -85,7 +98,7 @@ const SingleComPost = (item) => {
 						<Typography
 							sx={{
 								fontFamily: 'Playfair Display',
-								color: 'orange'
+								color: 'orange',
 							}}
 							fontSize={13}
 							component='div'>

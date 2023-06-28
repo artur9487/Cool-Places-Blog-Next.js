@@ -8,12 +8,12 @@ import { useContext } from 'react';
 import Divider from '@mui/material/Divider';
 import { Box } from '@mui/system';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 
-const CategoriesBar = () => {
+const CategoriesBar: React.FC = () => {
 	const { categoriesOutput } = useContext(Context);
-	const router = useRouter();
-	const slug = router.asPath.slice(1);
+	const router: NextRouter = useRouter();
+	const slug: string = router.asPath.slice(1);
 
 	return (
 		<Card
@@ -27,13 +27,13 @@ const CategoriesBar = () => {
 				justifyContent: 'space-between',
 				alignItems: 'center',
 				flexDirection: 'column',
-				p: 3
+				p: 3,
 			}}>
 			<Typography
 				sx={{
 					fontFamily: 'Playfair Display',
 					fontStyle: 'italic',
-					fontWeight: 1000
+					fontWeight: 1000,
 				}}
 				textAlign='center'
 				variant='h5'>
@@ -44,14 +44,14 @@ const CategoriesBar = () => {
 					width: '100%',
 					display: 'flex',
 					alignItems: 'flex-start',
-					flexDirection: 'column'
+					flexDirection: 'column',
 				}}>
 				<Box sx={{ width: '100%', mb: 2 }}>
 					<Typography
 						sx={{
 							color: slug === '' ? 'orange' : 'black',
 							fontFamily: 'Playfair Display',
-							fontStyle: 'italic'
+							fontStyle: 'italic',
 						}}
 						gutterBottom
 						fontSize={17}
@@ -67,7 +67,7 @@ const CategoriesBar = () => {
 								sx={{
 									color: slug === item ? 'orange' : 'black',
 									fontFamily: 'Playfair Display',
-									fontStyle: 'italic'
+									fontStyle: 'italic',
 								}}
 								gutterBottom
 								fontSize={17}
