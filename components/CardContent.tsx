@@ -17,7 +17,7 @@ const CardContent: React.FC = () => {
 							key={indx}
 							length={data.length}
 							indx={indx}
-							item={item}
+							item={item.node}
 						/>
 					);
 				})}
