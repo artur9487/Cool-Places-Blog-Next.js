@@ -69,8 +69,6 @@ const MainLayout = (props: MainLayout_schema) => {
 		}
 	}, [numberToLoad, type]);
 
-	console.log(data);
-
 	return (
 		<Context.Provider
 			value={{

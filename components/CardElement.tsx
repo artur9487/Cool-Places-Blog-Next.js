@@ -13,15 +13,23 @@ import { useEffect, useContext } from 'react';
 import AnimationComp from './AnimationComp';
 import { Context } from '../ContextComp';
 import styles from '/styles/Home.module.scss';
-import { placesOutput_schema } from './globalComponents/globalTypes';
 
-interface CardElement_schema extends placesOutput_schema {
+interface CardElement_schema {
+	item: {
+		description: string;
+		photo: {
+			url: string;
+		};
+		placeName: string;
+		id: string;
+		createdAt: Date;
+	};
 	indx: number;
 	length: number;
 }
 
 const CardElement: React.FC<CardElement_schema> = (props) => {
-	const { description, photo, placeName, id } = props.node;
+	const { photo, placeName, id, createdAt } = props.item;
 	const { length, indx } = props;
 	const myRef = useRef(null);
 	const { type, maxWidth600 } = useContext(Context);
@@ -81,9 +89,7 @@ const CardElement: React.FC<CardElement_schema> = (props) => {
 						sx={{ fontFamily: 'Playfair Display' }}
 						variant='body1'
 						color='text.secondary'>
-						{moment({ description }).format(
-							'MMMM Do YYYY, h:mm:ss a'
-						)}
+						{moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')}
 					</Typography>
 					<Typography
 						sx={{
