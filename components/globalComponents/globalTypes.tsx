@@ -27,6 +27,20 @@ export interface home_schema {
 	};
 }
 
+export interface mostCommented_schema {
+	mostCommentedOutput: {
+		node: {
+			author: string;
+			comment: string;
+			createdAt: Date;
+			email: string;
+			places: {
+				id: string;
+			};
+		};
+	}[];
+}
+
 export interface mostCommentedOutput_schema {
 	node: {
 		createdAt: string;
