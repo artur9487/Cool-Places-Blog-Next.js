@@ -14,8 +14,22 @@ import AnimationComp from './AnimationComp';
 import { Context } from '../ContextComp';
 import styles from '/styles/Home.module.scss';
 
-const CardElement = (props) => {
-	const { description, photo, placeName, id } = props.item.node;
+interface CardElement_schema {
+	item: {
+		description: string;
+		photo: {
+			url: string;
+		};
+		placeName: string;
+		id: string;
+		createdAt: Date;
+	};
+	indx: number;
+	length: number;
+}
+
+const CardElement: React.FC<CardElement_schema> = (props) => {
+	const { photo, placeName, id, createdAt } = props.item;
 	const { length, indx } = props;
 	const myRef = useRef(null);
 	const { type, maxWidth600 } = useContext(Context);
@@ -46,7 +60,7 @@ const CardElement = (props) => {
 					p: 3,
 					background: `linear-gradient(45deg, rgb(210, 210, 210), rgb(240, 240, 240),rgb(240, 240, 240), rgb(210, 210, 210))`,
 					boxShadow: '7px 7px 10px rgba(191, 191, 191,1)',
-					borderRadius: 4
+					borderRadius: 4,
 				}}
 				ref={myRef}>
 				<CardMedia
@@ -55,25 +69,33 @@ const CardElement = (props) => {
 						height: 200,
 						position: 'relative',
 						borderRadius: 5,
-						overflow: 'hidden'
+						overflow: 'hidden',
 					}}>
-					<Image src={photo.url} objectFit='cover' layout='fill' alt='card' />
+					<Image
+						src={photo.url}
+						objectFit='cover'
+						layout='fill'
+						alt='card'
+					/>
 				</CardMedia>
 				<CardContent
 					sx={{
 						height: 100,
 						display: 'flex',
 						alignItems: 'center',
-						flexDirection: 'column'
+						flexDirection: 'column',
 					}}>
 					<Typography
 						sx={{ fontFamily: 'Playfair Display' }}
 						variant='body1'
 						color='text.secondary'>
-						{moment({ description }).format('MMMM Do YYYY, h:mm:ss a')}
+						{moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')}
 					</Typography>
 					<Typography
-						sx={{ fontFamily: 'Playfair Display', fontStyle: 'italic' }}
+						sx={{
+							fontFamily: 'Playfair Display',
+							fontStyle: 'italic',
+						}}
 						gutterBottom
 						variant={!maxWidth600 ? 'h4' : 'h5'}
 						component='div'>
@@ -87,7 +109,7 @@ const CardElement = (props) => {
 								<Typography
 									sx={{
 										fontFamily: 'Playfair Display',
-										fontSize: !maxWidth600 ? 15 : 13
+										fontSize: !maxWidth600 ? 15 : 13,
 									}}>
 									Show Details
 								</Typography>

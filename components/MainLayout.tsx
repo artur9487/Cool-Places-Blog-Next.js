@@ -9,6 +9,7 @@ import { useState, useLayoutEffect, useRef } from 'react';
 import { request, gql } from 'graphql-request';
 import { useMediaQuery } from '@mui/material';
 import { home_schema } from './globalComponents/globalTypes';
+import { MutableRefObject } from 'react';
 
 interface MainLayout_schema extends home_schema {
 	type: string;
@@ -22,13 +23,13 @@ const MainLayout = (props: MainLayout_schema) => {
 		type,
 		mostCommentedOutput,
 	} = props;
-	const [numberToLoad, setNumberToLoad] = useState(
+	const [numberToLoad, setNumberToLoad] = useState<number>(
 		placesOutput.length
 	);
 	const [data, setData] = useState(placesOutput);
-	const firstUpdate = useRef(true);
-	const maxWidth900 = useMediaQuery('(max-width:900px)');
-	const maxWidth600 = useMediaQuery('(max-width:600px)');
+	const firstUpdate = useRef<boolean>(true);
+	const maxWidth900 = useMediaQuery<string>('(max-width:900px)');
+	const maxWidth600 = useMediaQuery<string>('(max-width:600px)');
 
 	useLayoutEffect(() => {
 		if (firstUpdate.current) {
@@ -68,8 +69,6 @@ const MainLayout = (props: MainLayout_schema) => {
 			}
 		}
 	}, [numberToLoad, type]);
-
-	console.log(data);
 
 	return (
 		<Context.Provider

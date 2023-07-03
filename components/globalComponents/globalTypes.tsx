@@ -4,7 +4,7 @@ export interface home_schema {
 	placesOutput: {
 		node: {
 			category: string;
-			createdAt: string;
+			createdAt: Date;
 			description: string;
 			id: string;
 			photo: {
@@ -16,7 +16,7 @@ export interface home_schema {
 	categoriesOutput: [];
 	mostCommentedOutput: {
 		node: {
-			createdAt: string;
+			createdAt: Date;
 			id: string;
 			photo: {
 				url: string;
@@ -42,8 +42,9 @@ export interface mostCommented_schema {
 }
 
 export interface mostCommentedOutput_schema {
+	[x: string]: any;
 	node: {
-		createdAt: string;
+		createdAt: Date;
 		id: string;
 		photo: {
 			url: string;
@@ -58,7 +59,7 @@ export interface placeResponse_schema {
 		edges: {
 			node: {
 				category: string;
-				createdAt: string;
+				createdAt: Date;
 				description: string;
 				id: string;
 				photo: {
@@ -73,7 +74,7 @@ export interface placeResponse_schema {
 export interface placesOutput_schema {
 	node: {
 		category: string;
-		createdAt: string;
+		createdAt: Date;
 		description: string;
 		id: string;
 		photo: {
@@ -110,7 +111,7 @@ export interface mostCommenteArr_schema {
 
 export interface mostCommentedVaules_schema {
 	node: {
-		createdAt: string;
+		createdAt: Date;
 		id: string;
 		photo: {
 			url: string;
@@ -123,7 +124,7 @@ export interface mostCommentedResponse_schema {
 	placesSConnection: {
 		edges: {
 			node: {
-				createdAt: string;
+				createdAt: Date;
 				id: string;
 				photo: {
 					url: string;
@@ -138,7 +139,7 @@ export interface context_schema {
 	data: {
 		node: {
 			category: string;
-			createdAt: string;
+			createdAt: Date;
 			description: string;
 			id: string;
 			photo: {

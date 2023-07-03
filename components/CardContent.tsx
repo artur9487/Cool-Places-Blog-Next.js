@@ -12,12 +12,13 @@ const CardContent: React.FC = () => {
 		<>
 			<Stack sx={{ width: '100%' }} direction='column' spacing={4}>
 				{data.map((item, indx) => {
+					const singleItem: any = item.node;
 					return (
 						<CardElement
 							key={indx}
 							length={data.length}
 							indx={indx}
-							item={item}
+							item={singleItem}
 						/>
 					);
 				})}

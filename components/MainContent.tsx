@@ -13,6 +13,7 @@ import styles from '/styles/Home.module.scss';
 
 const MainContent: React.FC = () => {
 	const { type, maxWidth900, maxWidth600 } = useContext(Context);
+	const maxWidth900b: any = maxWidth900;
 
 	return (
 		<Grid
@@ -26,14 +27,14 @@ const MainContent: React.FC = () => {
 				<CardContent />
 				{type === 'all' ? (
 					<FadeWrapper>
-						<ViewMoreButton maxWidth900={maxWidth900} />
+						<ViewMoreButton maxWidth900={maxWidth900b} />
 					</FadeWrapper>
 				) : null}
 			</Grid>
 			<Grid
 				sx={{
 					position: 'relative',
-					minHeight: !maxWidth900 ? '100vh' : '35vh'
+					minHeight: !maxWidth900 ? '100vh' : '35vh',
 				}}
 				xs={4}
 				md={4}
@@ -46,13 +47,17 @@ const MainContent: React.FC = () => {
 					alignItems={!maxWidth900 ? 'initial' : 'flex-start'}
 					sx={{
 						width: !maxWidth900 ? 'initial' : '100%',
-						position: !maxWidth900 ? 'fixed' : 'relative'
+						position: !maxWidth900 ? 'fixed' : 'relative',
 					}}
 					spacing={3}>
 					<Stack
 						spacing={3}
 						direction={
-							!maxWidth600 ? (!maxWidth900 ? 'column' : 'row') : 'column'
+							!maxWidth600
+								? !maxWidth900
+									? 'column'
+									: 'row'
+								: 'column'
 						}>
 						<FadeWrapper>
 							<MostComPosts />
