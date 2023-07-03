@@ -16,13 +16,13 @@ const MostComPosts: React.FC = () => {
 				background: `linear-gradient(45deg, rgb(210, 210, 210), rgb(240, 240, 240),rgb(240, 240, 240), rgb(210, 210, 210))`,
 				boxShadow: '7px 7px 10px rgba(191, 191, 191,1)',
 				borderRadius: 4,
-				p: 3
+				p: 3,
 			}}>
 			<Typography
 				sx={{
 					fontFamily: 'Playfair Display',
 					fontStyle: 'italic',
-					fontWeight: 1000
+					fontWeight: 1000,
 				}}
 				textAlign='center'
 				variant='h5'>

@@ -3,11 +3,13 @@
 import MainContent from '../../components/MainContent';
 import MainLayout from '../../components/MainLayout';
 import { gql, request } from 'graphql-request';
+import { home_schema } from '../../components/globalComponents/globalTypes';
+import { GetStaticPaths, GetStaticProps } from 'next/types';
 
-const CategoryComponent = ({
+const CategoryComponent: React.FC<home_schema> = ({
 	placesOutput,
 	categoriesOutput,
-	mostCommentedOutput
+	mostCommentedOutput,
 }) => {
 	return (
 		<MainLayout
@@ -20,9 +22,9 @@ const CategoryComponent = ({
 	);
 };
 
-export async function getStaticPaths() {
-	const url = process.env.API;
-	const query4 = gql`
+export const getStaticPaths: GetStaticPaths = async () => {
+	const url: string = process.env.API;
+	const query4: string = gql`
 		query MyQuery {
 			placesSConnection {
 				edges {
@@ -41,15 +43,15 @@ export async function getStaticPaths() {
 			return { params: { slug: item.node.category } };
 		}),
 
-		fallback: false // false or 'blocking'
+		fallback: false, // false or 'blocking'
 	};
-}
+};
 
-export async function getStaticProps(context) {
-	const slug = context.params.slug;
-	const url = process.env.API;
+export const getStaticProps: GetStaticProps = async (context) => {
+	const slug: string[] | string = context.params.slug;
+	const url: string = process.env.API;
 
-	const query = gql`
+	const query: string = gql`
 		query ($slug: String!) {
 			placesSConnection(where: { category: $slug }) {
 				edges {
@@ -69,7 +71,11 @@ export async function getStaticProps(context) {
 		}
 	`;
 
-	const variabless = { slug };
+	interface variables_schema {
+		slug: string | string[];
+	}
+
+	const variabless: variables_schema = { slug };
 
 	const response = await request(url, query, variabless);
 	const placesOutput = response.placesSConnection.edges;
@@ -117,7 +123,9 @@ export async function getStaticProps(context) {
 
 		const query3 = gql`
 			query PlaceQuery($commentedPlace: ID!, $slug: String!) {
-				placesSConnection(where: { id: $commentedPlace, category: $slug }) {
+				placesSConnection(
+					where: { id: $commentedPlace, category: $slug }
+				) {
 					edges {
 						node {
 							placeName
@@ -132,9 +140,17 @@ export async function getStaticProps(context) {
 			}
 		`;
 		const variables = { commentedPlace, slug };
-		const mostCommentedResponse = await request(url, query3, variables);
-		const mostCommentedVaules = mostCommentedResponse.placesSConnection.edges;
-		mostCommentedOutput.push({ ...mostCommentedVaules, count: commentCount });
+		const mostCommentedResponse = await request(
+			url,
+			query3,
+			variables
+		);
+		const mostCommentedVaules =
+			mostCommentedResponse.placesSConnection.edges;
+		mostCommentedOutput.push({
+			...mostCommentedVaules,
+			count: commentCount,
+		});
 	};
 
 	await fetchMostCommented();
@@ -146,8 +162,8 @@ export async function getStaticProps(context) {
 	}
 
 	return {
-		props: { placesOutput, categoriesOutput, mostCommentedOutput }
+		props: { placesOutput, categoriesOutput, mostCommentedOutput },
 	};
-}
+};
 
 export default CategoryComponent;
