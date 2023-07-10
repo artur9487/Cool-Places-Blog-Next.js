@@ -9,7 +9,7 @@ import {
 	categoryNodes_schema,
 	mostCommenteArr_schema,
 	mostCommentedVaules_schema,
-	mostCommentedResponse_schema
+	mostCommentedResponse_schema,
 } from './globalTypes';
 
 export const categoryFetchFunction: (
@@ -58,9 +58,9 @@ export const categoryFetchFunction: (
 			}
 		}
 	`;
-	const proResult3 = await request(url, query2);
-	const proResult4 = proResult3.placesSConnection.edges;
-	const values = proResult4.map((item) => {
+	const categoryNodes = await request(url, query2);
+	const categoryNodes = categoryNodes.placesSConnection.edges;
+	const values = categoryNodes.map((item) => {
 		return item.node.category;
 	});
 	let categoriesOutput = [...new Set(values)];
@@ -89,7 +89,9 @@ export const categoryFetchFunction: (
 
 		const query3 = gql`
 			query PlaceQuery($commentedPlace: ID!, $slug: String!) {
-				placesSConnection(where: { id: $commentedPlace, category: $slug }) {
+				placesSConnection(
+					where: { id: $commentedPlace, category: $slug }
+				) {
 					edges {
 						node {
 							placeName
@@ -104,9 +106,17 @@ export const categoryFetchFunction: (
 			}
 		`;
 		const variables = { commentedPlace, slug };
-		const mostCommentedResponse = await request(url, query3, variables);
-		const mostCommentedVaules = mostCommentedResponse.placesSConnection.edges;
-		mostCommentedOutput.push({ ...mostCommentedVaules, count: commentCount });
+		const mostCommentedResponse = await request(
+			url,
+			query3,
+			variables
+		);
+		const mostCommentedVaules =
+			mostCommentedResponse.placesSConnection.edges;
+		mostCommentedOutput.push({
+			...mostCommentedVaules,
+			count: commentCount,
+		});
 	};
 
 	for (let i = 0; i <= 2; i++) {
@@ -118,6 +128,6 @@ export const categoryFetchFunction: (
 		placesOutput,
 		categoriesOutput,
 		mostCommentedOutput,
-		placesResponse
+		placesResponse,
 	};
 };

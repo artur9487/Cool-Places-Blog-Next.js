@@ -12,13 +12,14 @@ import {
 	categoryNodes_schema,
 	mostCommenteArr_schema,
 	mostCommentedVaules_schema,
-	mostCommentedResponse_schema
+	mostCommentedResponse_schema,
+	placesOutput_schema,
 } from '../components/globalComponents/globalTypes';
 
 const Home: React.FC<home_schema> = ({
 	placesOutput,
 	categoriesOutput,
-	mostCommentedOutput
+	mostCommentedOutput,
 }) => {
 	return (
 		<MainLayout
@@ -52,9 +53,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		}
 	`;
 
-	const placesResponse: placeResponse_schema = await request(url, query);
+	const placesResponse: placeResponse_schema = await request(
+		url,
+		query
+	);
 
-	const placesOutput = placesResponse.placesSConnection.edges;
+	const placesOutput: placesOutput_schema[] =
+		placesResponse.placesSConnection.edges;
 
 	const query2 = gql`
 		query PlaceQuery {
@@ -72,7 +77,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		}
 	`;
 
-	const categoryResponse: categoryResponse_schema = await request(url, query2);
+	const categoryResponse: categoryResponse_schema = await request(
+		url,
+		query2
+	);
 
 	const categoryNodes: categoryNodes_schema[] =
 		categoryResponse.placesSConnection.edges;
@@ -83,9 +91,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 	let categoriesOutput: string[] = [...new Set(categoriesArr)];
 
-	let mostCommentedArr: mostCommenteArr_schema[] = categoryNodes.map((item) => {
-		return { place: item.node.id, count: item.node.commentS.length };
-	});
+	let mostCommentedArr: mostCommenteArr_schema[] = categoryNodes.map(
+		(item) => {
+			return {
+				place: item.node.id,
+				count: item.node.commentS.length,
+			};
+		}
+	);
 
 	let mostCommentedOutput: any = [];
 
@@ -123,18 +136,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		`;
 		const variables: { commentedPlace: string } = { commentedPlace };
 
-		const mostCommentedResponse: mostCommentedResponse_schema = await request(
-			url,
-			query3,
-			variables
-		);
+		const mostCommentedResponse: mostCommentedResponse_schema =
+			await request(url, query3, variables);
 
 		const mostCommentedVaules: mostCommentedVaules_schema[] =
 			mostCommentedResponse.placesSConnection.edges;
 
 		mostCommentedOutput.push({
 			...mostCommentedVaules,
-			count: commentCount
+			count: commentCount,
 		});
 	};
 
@@ -148,8 +158,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		props: {
 			placesOutput,
 			categoriesOutput,
-			mostCommentedOutput
-		}
+			mostCommentedOutput,
+		},
 	};
 };
 export default Home;

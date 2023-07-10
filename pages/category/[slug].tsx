@@ -3,8 +3,15 @@
 import MainContent from '../../components/MainContent';
 import MainLayout from '../../components/MainLayout';
 import { gql, request } from 'graphql-request';
-import { home_schema } from '../../components/globalComponents/globalTypes';
+import {
+	categoryNodes_schema,
+	categoryResponse_schema,
+	home_schema,
+	mostCommenteArr_schema,
+} from '../../components/globalComponents/globalTypes';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
+import { placeResponse_schema } from '../../components/globalComponents/globalTypes';
+import { placesOutput_schema } from '../../components/globalComponents/globalTypes';
 
 const CategoryComponent: React.FC<home_schema> = ({
 	placesOutput,
@@ -77,10 +84,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	const variabless: variables_schema = { slug };
 
-	const response = await request(url, query, variabless);
-	const placesOutput = response.placesSConnection.edges;
+	const response: placeResponse_schema = await request(
+		url,
+		query,
+		variabless
+	);
+	const placesOutput: placesOutput_schema[] =
+		response.placesSConnection.edges;
 
-	const query2 = gql`
+	const query2: string = gql`
 		query PlaceQuery {
 			placesSConnection {
 				edges {
@@ -92,22 +104,31 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			}
 		}
 	`;
-	const proResult3 = await request(url, query2);
-	const proResult4 = proResult3.placesSConnection.edges;
-	const values = proResult4.map((item) => {
+	const categoryResponse: categoryResponse_schema = await request(
+		url,
+		query2
+	);
+	const categoryNodes: categoryNodes_schema[] =
+		categoryResponse.placesSConnection.edges;
+
+	const categorieArr: string[] = categoryNodes.map((item) => {
 		return item.node.category;
 	});
-	let categoriesOutput = [...new Set(values)];
 
-	let mostCommentedArr = placesOutput.map((item) => {
-		return { place: item.node.id, count: item.node.commentS.length };
+	let categoriesOutput: string[] = [...new Set(categorieArr)];
+
+	let mostCommentedArr = categoryNodes.map((item) => {
+		return {
+			place: item.node.id,
+			count: item.node.commentS.length,
+		};
 	});
 
-	let mostCommentedOutput = [];
+	let mostCommentedOutput: string[] = [];
 
-	const fetchMostCommented = async () => {
-		let commentCount = -1;
-		let commentedPlace = '';
+	const fetchMostCommented: () => Promise<void> = async () => {
+		let commentCount: number = -1;
+		let commentedPlace: string = '';
 
 		mostCommentedArr.map((item) => {
 			if (commentCount < item.count) {
@@ -116,12 +137,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			}
 		});
 
-		const commentedPlaceIndx = mostCommentedArr.findIndex(
+		const commentedPlaceIndx: number = mostCommentedArr.findIndex(
 			(item) => item.place === commentedPlace
 		);
 		mostCommentedArr.splice(commentedPlaceIndx, 1);
 
-		const query3 = gql`
+		const query3: string = gql`
 			query PlaceQuery($commentedPlace: ID!, $slug: String!) {
 				placesSConnection(
 					where: { id: $commentedPlace, category: $slug }

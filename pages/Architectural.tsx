@@ -8,7 +8,7 @@ import { home_schema } from '../components/globalComponents/globalTypes';
 const Architectural: React.FC<home_schema> = ({
 	placesOutput,
 	categoriesOutput,
-	mostCommentedOutput
+	mostCommentedOutput,
 }) => {
 	return (
 		<MainLayout
@@ -62,12 +62,12 @@ export async function getStaticProps(context) {
 			}
 		}
 	`;
-	const proResult3 = await request(url, query2);
-	const proResult4 = proResult3.placesSConnection.edges;
-	const values = proResult4.map((item) => {
+	const categoryNodes = await request(url, query2);
+	const categoryNodes = categoryNodes.placesSConnection.edges;
+	const categoriesOutput = categoryNodes.map((item) => {
 		return item.node.category;
 	});
-	let categoriesOutput = [...new Set(values)];
+	let categoriesOutput = [...new Set(categoriesOutput)];
 
 	let mostCommentedArr = placesOutput.map((item) => {
 		return { place: item.node.id, count: item.node.commentS.length };
@@ -93,7 +93,9 @@ export async function getStaticProps(context) {
 
 		const query3 = gql`
 			query PlaceQuery($commentedPlace: ID!, $slug: String!) {
-				placesSConnection(where: { id: $commentedPlace, category: $slug }) {
+				placesSConnection(
+					where: { id: $commentedPlace, category: $slug }
+				) {
 					edges {
 						node {
 							placeName
@@ -108,9 +110,17 @@ export async function getStaticProps(context) {
 			}
 		`;
 		const variables = { commentedPlace, slug };
-		const mostCommentedResponse = await request(url, query3, variables);
-		const mostCommentedVaules = mostCommentedResponse.placesSConnection.edges;
-		mostCommentedOutput.push({ ...mostCommentedVaules, count: commentCount });
+		const mostCommentedResponse = await request(
+			url,
+			query3,
+			variables
+		);
+		const mostCommentedVaules =
+			mostCommentedResponse.placesSConnection.edges;
+		mostCommentedOutput.push({
+			...mostCommentedVaules,
+			count: commentCount,
+		});
 	};
 
 	for (let i = 0; i <= 2; i++) {
@@ -120,7 +130,7 @@ export async function getStaticProps(context) {
 	}
 
 	return {
-		props: { placesOutput, categoriesOutput, mostCommentedOutput }
+		props: { placesOutput, categoriesOutput, mostCommentedOutput },
 	};
 }
 
