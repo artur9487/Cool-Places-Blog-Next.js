@@ -8,6 +8,9 @@ import {
 	categoryResponse_schema,
 	home_schema,
 	mostCommenteArr_schema,
+	mostCommentedOutput_schema,
+	mostCommentedResponse_schema,
+	mostCommentedVaules_schema,
 } from '../../components/globalComponents/globalTypes';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import { placeResponse_schema } from '../../components/globalComponents/globalTypes';
@@ -117,14 +120,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	let categoriesOutput: string[] = [...new Set(categorieArr)];
 
-	let mostCommentedArr = categoryNodes.map((item) => {
-		return {
-			place: item.node.id,
-			count: item.node.commentS.length,
-		};
-	});
-
-	let mostCommentedOutput: string[] = [];
+	let mostCommentedArr: mostCommenteArr_schema[] = categoryNodes.map(
+		(item) => {
+			return {
+				place: item.node.id,
+				count: item.node.commentS.length,
+			};
+		}
+	);
+	let mostCommentedOutput: any = [];
 
 	const fetchMostCommented: () => Promise<void> = async () => {
 		let commentCount: number = -1;
@@ -160,14 +164,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
 				}
 			}
 		`;
-		const variables = { commentedPlace, slug };
-		const mostCommentedResponse = await request(
-			url,
-			query3,
-			variables
-		);
-		const mostCommentedVaules =
+
+		const variables: {
+			commentedPlace: string;
+			slug: string | string[];
+		} = { commentedPlace, slug };
+
+		const mostCommentedResponse: mostCommentedResponse_schema =
+			await request(url, query3, variables);
+		const mostCommentedVaules: mostCommentedVaules_schema[] =
 			mostCommentedResponse.placesSConnection.edges;
+
 		mostCommentedOutput.push({
 			...mostCommentedVaules,
 			count: commentCount,

@@ -63,11 +63,11 @@ export async function getStaticProps(context) {
 		}
 	`;
 	const categoryNodes = await request(url, query2);
-	const categoryNodes = categoryNodes.placesSConnection.edges;
-	const categoriesOutput = categoryNodes.map((item) => {
+	const categoriesArr = categoryNodes.placesSConnection.edges;
+	const values = categoriesArr.map((item) => {
 		return item.node.category;
 	});
-	let categoriesOutput = [...new Set(categoriesOutput)];
+	let categoriesOutput = [...new Set(values)];
 
 	let mostCommentedArr = placesOutput.map((item) => {
 		return { place: item.node.id, count: item.node.commentS.length };
