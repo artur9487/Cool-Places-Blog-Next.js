@@ -12,7 +12,7 @@ import {
 	mostCommentedResponse_schema,
 } from './globalTypes';
 
-export const categoryFetchFunction: (
+const categoryFetchFunction: (
 	slug: any,
 	url: any
 ) => Promise<{
@@ -59,8 +59,8 @@ export const categoryFetchFunction: (
 		}
 	`;
 	const categoryNodes = await request(url, query2);
-	const categoryNodes = categoryNodes.placesSConnection.edges;
-	const values = categoryNodes.map((item) => {
+	const categoryNodes2 = categoryNodes.placesSConnection.edges;
+	const values = categoryNodes2.map((item) => {
 		return item.node.category;
 	});
 	let categoriesOutput = [...new Set(values)];
