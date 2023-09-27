@@ -12,7 +12,7 @@ import {
 	mostCommentedResponse_schema,
 } from './globalTypes';
 
-const categoryFetchFunction: (
+export const categoryFetchFunction: (
 	slug: any,
 	url: any
 ) => Promise<{
