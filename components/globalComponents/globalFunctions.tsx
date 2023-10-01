@@ -1,16 +1,6 @@
 /** @format */
 
 import { gql, request } from 'graphql-request';
-import {
-	home_schema,
-	placeResponse_schema,
-	placesOutput_schema,
-	categoryResponse_schema,
-	categoryNodes_schema,
-	mostCommenteArr_schema,
-	mostCommentedVaules_schema,
-	mostCommentedResponse_schema,
-} from './globalTypes';
 
 export const categoryFetchFunction: (
 	slug: any,

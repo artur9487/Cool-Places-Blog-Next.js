@@ -4,13 +4,16 @@
  */
 
 const nextConfig = {
-	reactStrictMode: false
+	reactStrictMode: false,
+	compiler: {
+		removeConsole: true,
+	},
 };
 
 module.exports = {
 	nextConfig,
 	images: {
 		domains: ['media.graphcms.com'],
-		domains: ['media.graphassets.com']
-	}
+		domains: ['media.graphassets.com'],
+	},
 };

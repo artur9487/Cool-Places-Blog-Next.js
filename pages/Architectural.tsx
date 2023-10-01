@@ -4,6 +4,7 @@ import MainContent from '../components/MainContent';
 import MainLayout from '../components/MainLayout';
 import { gql, request } from 'graphql-request';
 import { home_schema } from '../components/globalComponents/globalTypes';
+import { GetStaticProps } from 'next';
 
 const Architectural: React.FC<home_schema> = ({
 	placesOutput,
@@ -21,11 +22,11 @@ const Architectural: React.FC<home_schema> = ({
 	);
 };
 
-export async function getStaticProps(context) {
-	const slug = 'Architectural';
-	const url = process.env.API;
+export const getStaticProps: GetStaticProps = async (context) => {
+	const slug: string = 'Architectural';
+	const url: string = process.env.API;
 
-	const query = gql`
+	const query: string = gql`
 		query ($slug: String!) {
 			placesSConnection(where: { category: $slug }) {
 				edges {
@@ -62,6 +63,7 @@ export async function getStaticProps(context) {
 			}
 		}
 	`;
+
 	const categoryNodes = await request(url, query2);
 	const categoriesArr = categoryNodes.placesSConnection.edges;
 	const values = categoriesArr.map((item) => {
@@ -70,6 +72,7 @@ export async function getStaticProps(context) {
 	let categoriesOutput = [...new Set(values)];
 
 	let mostCommentedArr = placesOutput.map((item) => {
+		console.log(item);
 		return { place: item.node.id, count: item.node.commentS.length };
 	});
 
@@ -130,8 +133,13 @@ export async function getStaticProps(context) {
 	}
 
 	return {
-		props: { placesOutput, categoriesOutput, mostCommentedOutput },
+		props: {
+			placesOutput,
+			categoriesOutput,
+			mostCommentedOutput,
+			mostCommentedArr,
+		},
 	};
-}
+};
 
 export default Architectural;
